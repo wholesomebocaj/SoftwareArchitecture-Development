@@ -16,8 +16,11 @@ This document describes functional and non-functional requirements, business rul
 ## 3. System Overview
 
 **System Description:** Multi-channel complaint lifecycle: log, triage, assign, resolve, confirm/close; channels include web, mobile, and phone; extensible to chatbot and other regions.  
+
 **System Objectives:** Streamline complaint handling, improve SLA compliance and CSAT, provide dashboards and auditability, and ensure tenant isolation for enterprise customers.  
-**Target Audience/End Users:** Consumers, Help Desk Agents, Support Engineers, Managers, and System Administrators per tenant.  
+
+**User Roles:** Consumers, Help Desk Agents, Support Engineers, Managers, and System Administrators per tenant.
+
 **General Functional Scope:** Complaint creation and tracking, assignment and updates, resolution and closure, analytics dashboards, onboarding, RBAC, notifications, audit, attachments, search/filter.
 
 ## 4. Functional Requirements
