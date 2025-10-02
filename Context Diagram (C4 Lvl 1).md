@@ -1,7 +1,7 @@
 # System Context Diagram (C4 Level 1)
 
 ## Diagram
-<img width="841" height="591" alt="C4 Level 1" src="https://github.com/user-attachments/assets/bbb7d6ce-86a5-461c-9ed4-8a78ee445a08" />
+<img width="678" height="641" alt="C4 Level 1-2" src="https://github.com/user-attachments/assets/017eb931-9180-4b3b-b9b8-852558976e96" />
 
 ## Description
 This System Context diagram provides a high-level overview of the Complaint Management System (CMS), showing the system boundaries and its relationships with external users and systems.
