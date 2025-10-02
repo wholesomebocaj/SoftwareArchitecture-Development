@@ -1,7 +1,7 @@
 # System Context Diagram (C4 Level 1)
 
 ## Diagram
-<img width="678" height="641" alt="C4 Level 1-2" src="https://github.com/user-attachments/assets/017eb931-9180-4b3b-b9b8-852558976e96" />
+<img width="899" height="746" alt="image" src="https://github.com/user-attachments/assets/b5de0d23-09ca-4737-b802-182608ea6742" />
 
 At the system context level, CMS is the central system in scope, surrounded by the different **users (people)** and **external systems** it interacts with.
 
