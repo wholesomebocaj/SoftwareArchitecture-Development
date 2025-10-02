@@ -25,6 +25,12 @@ This document describes functional and non-functional requirements, business rul
 
 ## 4. Functional Requirements
 
+- **SLA (Service Level Agreement)**: A formal agreement between a service provider and customer that defines expected service standards—such as response times and resolution times for complaints. The CMS uses SLA metrics to monitor if agents and support are meeting their commitments.
+
+- **CSAT (Customer Satisfaction Score)**: A metric that captures the customer's satisfaction with how their complaint was resolved, often collected through surveys or feedback forms when a ticket is closed. It's a key indicator of service quality.
+
+- **TTR (Time to Resolution)**: The duration from when a complaint is logged to when it is resolved and closed. Measuring TTR helps assess how efficiently issues are handled.
+
 | Code | Name | Description | Acceptance Criteria | Priority |
 |------|------|-------------|---------------------|----------|
 | RF01 | Submit Complaint | Consumers submit complaints via web/mobile with attachments. | Validated fields; unique ticket ID; confirmation; status Open; create ≤10s. | High |
