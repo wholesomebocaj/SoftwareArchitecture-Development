@@ -5,9 +5,9 @@
 ## 1. Project Identification
 
 **Project Name:** ABC Complaint Management System (CMS)  
-**Document Version:** 0.1 (draft)  
+**Document Version:** 0.1  
 **Date:** 2025-09-30  
-**Author(s):** Individual student submission
+**Author(s):** Jacob Baker
 
 ## 2. Document Purpose
 
