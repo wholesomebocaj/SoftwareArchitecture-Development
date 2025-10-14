@@ -1,4 +1,4 @@
-# Lab Worksheet: UI/UX and Non-Functional Requirements
+## UI/UX and Non-Functional Requirements
 
 ## Activity 1: Personas & Scenarios
 
