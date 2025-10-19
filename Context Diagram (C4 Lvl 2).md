@@ -24,7 +24,7 @@ This container diagram illustrates the internal structure of the Complaint Manag
 
 | Component | Technology | Purpose |
 |-----------|------------|---------|
-| Express.js API | Node.js, Express.js | Core backend service handling REST API endpoints and complaint lifecycle management |
+| Express.js API | Node.js, Express.js | Core backend service, handles all the complaint processes and talks to both the website and the database |
 | Auth Module | JWT, bcrypt | User authentication and token-based security |
 | Notification Module |   | Centralized email and SMS notification delivery |
 
