@@ -2,6 +2,8 @@
 
 ## Diagram
 <img width="899" height="746" alt="image" src="https://github.com/user-attachments/assets/b5de0d23-09ca-4737-b802-182608ea6742" />
+<img width="2728" height="954" alt="image" src="https://github.com/user-attachments/assets/0dde9350-1c34-42da-a35a-3a3f0450c573" />
+
 
 At the system context level, CMS is the central system in scope, surrounded by the different **users (people)** and **external systems** it interacts with.
 
