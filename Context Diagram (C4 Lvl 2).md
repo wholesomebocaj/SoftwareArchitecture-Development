@@ -2,7 +2,7 @@
 
 ## System Overview
 
-![C4 Level 2 Container Diagram]<img width="1288" height="858" alt="image" src="https://github.com/user-attachments/assets/d9da39f0-df84-4fec-ac24-959e78aa292a" />
+<img width="1288" height="858" alt="image" src="https://github.com/user-attachments/assets/d9da39f0-df84-4fec-ac24-959e78aa292a" />
 
 
 *Figure 1: Container diagram showing the internal structure of the Complaint Management System using a layered N-tier architecture*
