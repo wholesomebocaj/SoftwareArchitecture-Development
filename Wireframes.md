@@ -2,7 +2,7 @@
 
 This directory contains the wireframes for the Complaint Management System (CMS) designed for ABC Limited.
 
-## 🎯 User Roles & Corresponding Wireframes
+## User Roles & Corresponding Wireframes
 
 | User Role | Wireframes | Key Functions |
 |-----------|------------|---------------|
@@ -10,7 +10,7 @@ This directory contains the wireframes for the Complaint Management System (CMS)
 | **Helpdesk Agent** | Dashboard | Manage and resolve complaints |
 | **System Administrator** | Organisation Management | Onboard companies and manage users |
 
-## 🖼️ Wireframe Files
+## Wireframe Files
 
 ### 1. Consumer Login 
 **Purpose:** Secure entry point for all system users
