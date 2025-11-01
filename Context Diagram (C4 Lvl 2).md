@@ -1,4 +1,4 @@
-# C4 Level 2: Container Diagram
+# Container Diagram (C4 Level 2)
 
 ## System Overview
 
