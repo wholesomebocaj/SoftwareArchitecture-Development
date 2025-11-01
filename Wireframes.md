@@ -70,7 +70,6 @@ This directory contains the wireframes for the Complaint Management System (CMS)
 
 All wireframes incorporate WCAG 2.0 guidelines including:
 - Minimum 16px font sizes
-- High color contrast ratios (4.5:1 minimum)
 - Clear visual hierarchy
 - Keyboard navigation support
 - Screen reader compatible labels
