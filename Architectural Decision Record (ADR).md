@@ -2,7 +2,7 @@
 
 ## Context and Problem Statement
 
-The Complaint Management System (CMS) needs an architecture that supports multiple tenants from banking and telecom sectors, providing scalable, maintainable, and secure complaint management across web, mobile, and phone channels. Which architectural style balances ease of implementation for learners and robustness for production use?
+The Complaint Management System (CMS) must support multiple tenants from banking and telecom sectors, providing scalable, maintainable, and secure complaint management across web, mobile, and phone channels. The architecture should balance ease of implementation (suitable for learners) and robustness for production deployment.
 
 ## Considered Options
 
@@ -12,13 +12,18 @@ The Complaint Management System (CMS) needs an architecture that supports multip
 
 ## Decision Outcome
 
-Chosen option: **"Layered (N-Tier) Architecture"**, because it provides clear separation of concerns into presentation, business logic, and persistence layers, enabling modular development and maintainability. It also aligns well with extensibility requirements and the C4 modeling approach used in the module.
+Chosen option: **Layered (N-Tier) Architecture**, because it supports clear separation into presentation, business logic, and persistence layers, facilitating modular development, maintainability, and extensibility. This style aligns well with the C4 modeling approach and accessibility/security compliance.
 
 ## Consequences
 
-**Good**, because this style supports modularity, testability, and clear division of responsibilities, making it easier to develop and maintain the CMS progressively. It also facilitates compliance with accessibility and security requirements.
+**Good:**  
+- Modular design ensures separation of concerns, improving testability and maintainability.  
+- Facilitates progressive development and scaling in multi-tenant environments.  
+- Supports accessibility and security requirements effectively.
 
-**Bad**, because it may introduce some inter-layer communication overhead and can lead to increased complexity if layers are over-engineered or poorly managed.
+**Bad:**  
+- May introduce inter-layer communication overhead.  
+- Risk of complexity increase if layers are over-engineered or improperly managed.
 
 ---
 
@@ -26,49 +31,41 @@ Chosen option: **"Layered (N-Tier) Architecture"**, because it provides clear se
 
 ## Selected Technologies
 
-**Presentation Layer:** HTML, CSS, JavaScript 
+**Presentation Layer:** HTML, CSS, JavaScript
 
-**Application Layer:** Python, Flask, JWT and bcrypt authentication 
+**Application Layer:** Python, Django, Django's built-in authentication
 
-**Data Layer:** SQLite with multi-tenant design 
+**Data Layer:** PostgreSQL with a multi-tenant design approach
 
 ## Rationale for Technology Choices
 
-### Why HTML/CSS/JavaScript 
-- Low learning curve for proof-of-concept development
-- Direct support for WCAG accessibility requirements
-- Suitable for demonstrating core functionality without overhead
+### Why HTML/CSS/JavaScript  
+- Low learning curve for frontend prototyping.  
+- Native support for WCAG accessibility standards.  
+- Enables demonstration of core functionalities with minimal overhead.
 
-### Why Python and Flask
-- **Rapid Development**: Flask's minimalistic approach allows for quick prototyping and iteration
-- **Beginner-Friendly**: Python's clean syntax and Flask's simplicity lower the learning curve
-- **Lightweight**: Minimal overhead compared to full-stack frameworks, focusing on core functionality
-- **Testing Support**: Excellent testing tools
-- **Multi-tenancy Ready**: Clear application context and request handling supports company isolation
+### Why Python and Django  
+- **Robust and Scalable:** Django's comprehensive features suit enterprise-grade applications for banking and telecom clients.  
+- **Built-in Authentication:** Provides secure, feature-rich authentication and authorization out-of-the-box, including role-based access control.  
+- **Modular and Maintainable:** Aligns with layered architecture principles and supports clear separation of concerns.  
+- **Multi-tenancy Support:** Can implement tenancy isolation effectively, supported by rich middleware and ORM capabilities.  
+- **Testing and Security:** Extensive tooling and community support for quality assurance and security best practices.
 
-### Why SQLite
-- Supports relational data modelling needed for complaint management
-- Enables multi-tenancy approach
-- Reduces deployment complexity during development phase
-- Python has excellent built-in SQLite support
-
-### Why JWT & bcrypt
-- JWT provides stateless authentication suitable for multi-tenant applications
-- bcrypt offers robust password hashing for security compliance
-- Lightweight and focused on core authentication requirements
-- Well-supported in Python ecosystem 
+### Why PostgreSQL  
+- **Production-Ready:** Highly scalable and reliable for expected CMS workloads.  
+- **Advanced Features:** Supports robust multi-tenancy, complex queries, indexing, and full-text search beneficial for complaint management.  
+- **Security:** Provides advanced database security features aligning with compliance needs.  
+- **Django Integration:** Highly compatible with Django ORM for seamless development experience.
 
 ## Consequences
 
-### Positive Outcomes
-- Simple, well-known technologies reduce development risk
-- Python's readability improves long-term maintainability
-- Flask's modular design supports clear separation of concerns
-- Lightweight stack enables rapid proof-of-concept development
-- Excellent testing ecosystem supports quality assurance
-- Technologies align with module learning objectives
+### Positive Outcomes  
+- Improved scalability and reliability for production deployment.  
+- Seamless integration of advanced security and authentication features.  
+- Strong alignment with maintainability, modularity, and extensibility goals.  
+- Enhanced admin capabilities for system management through Django’s admin interface.
 
-### Negative Outcomes
-- SQLite has scalability limitations for production deployment
-- Flask may require more manual configuration compared to full-stack frameworks
-- Limited built-in admin interface compared to Django
+### Negative Outcomes  
+- Steeper learning curve compared to Flask; may initially slow development.  
+- Increased complexity in setting up and managing multi-tenant architecture.  
+- Requires PostgreSQL deployment and management infrastructure.
