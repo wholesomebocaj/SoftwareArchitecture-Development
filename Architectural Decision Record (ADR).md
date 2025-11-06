@@ -33,14 +33,10 @@ Bad, because it may introduce some inter-layer communication overhead and can le
 ### Why HTML/CSS/JavaScript
 - Low learning curve for proof-of-concept development
 - Direct support for WCAG accessibility requirements
-- No complex build tools or frameworks needed for initial implementation
 - Suitable for demonstrating core functionality without overhead
 
-### Why Node.js + Express.js
-- Single language (JavaScript) across frontend and backend reduces complexity
-- Express.js provides minimal, flexible framework for overall product development
-- Extensive ecosystem for rapid prototyping
-- Aligns with learning objectives for web application development
+### Why Python and Flask
+
 
 ### Why SQLite
 - Supports relational data modeling needed for complaint management
