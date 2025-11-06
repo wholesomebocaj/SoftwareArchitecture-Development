@@ -27,7 +27,9 @@ Chosen option: **"Layered (N-Tier) Architecture"**, because it provides clear se
 ## Selected Technologies
 
 **Presentation Layer:** HTML, CSS, JavaScript 
-**Application Layer:** Python, Flask, JWT and bcrypt authentication  
+
+**Application Layer:** Python, Flask, JWT and bcrypt authentication 
+
 **Data Layer:** SQLite with multi-tenant design 
 
 ## Rationale for Technology Choices
