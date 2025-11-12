@@ -1,6 +1,5 @@
 # C4 Level 3: Flask API Component Diagram
 
-<img width="676" height="955" alt="image" src="https://github.com/user-attachments/assets/dbc47783-54fd-40c0-822d-df5a6c4f18a3" />
 <img width="463" height="1125" alt="c4 level 3 python django" src="https://github.com/user-attachments/assets/528ca6ff-76e2-467e-8742-eb18faca1944" />
 
 *Component diagram showing the internal structure of the Flask API using layered architecture*
