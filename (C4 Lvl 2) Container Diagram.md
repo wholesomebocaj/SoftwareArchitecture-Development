@@ -9,7 +9,7 @@
 
 ## Architecture Description
 
-This container diagram illustrates the Complaint Management System (CMS) implemented using a layered (N-tier) architecture with Django. The system supports multi-tenant architecture and is organized into discrete layers, each with specific responsibilities and technologies optimized for enterprise deployment.
+The Complaint Management System (CMS) implemented with Django in a layered (N-tier) architecture is shown in this container diagram. The system is divided into distinct layers with distinct roles and enterprise-ready technologies, also supporting a multi-tenant architecture.
 
 ## Architectural Layers
 
@@ -57,7 +57,7 @@ This container diagram illustrates the Complaint Management System (CMS) impleme
 ### Quality Attributes
 - **Enterprise Security**: Django's built-in security features including CSRF protection, SQL injection prevention, XSS protection, and clickjacking protection
 - **WCAG Compliance**: Accessibility standards implemented throughout the presentation layer
-- **High Scalability**: Architecture designed to handle 200M+ users with PostgreSQL performance tuning
+- **High Scalability**: Architecture designed to handle high user numbers with PostgreSQL 
 - **Maintainability**: Django's automatic admin interface for efficient system management and user administration
 - **Database Integrity**: ACID compliance and transactional safety with PostgreSQL
 
@@ -65,20 +65,20 @@ This container diagram illustrates the Complaint Management System (CMS) impleme
 
 | Layer | Technologies |
 |-------|-------------|
-| Frontend | HTML5, CSS3, JavaScript (ES6+) |
-| Backend Framework | Python 3, Django 4.x, Django REST Framework |
-| Database | PostgreSQL 14+ with multi-tenant extensions |
+| Frontend | HTML, CSS, JavaScript |
+| Backend Framework | Python, Django |
+| Database | PostgreSQL |
 | Authentication | Django Authentication System with session and token auth |
 | Data Access | Django ORM with multi-tenant query optimization |
-| Deployment | WSGI compatible servers (Gunicorn/uWSGI) |
+
 
 ## System Capabilities
 
 The Django-based architecture supports the core complaint management workflow while providing:
 
-- **Enterprise Scalability**: Multi-tenant architecture with PostgreSQL performance optimization for banking and telecom sectors
+- **Enterprise Scalability**: Multi-tenant architecture with PostgreSQL performance optimisation for banking and telecom sectors
 - **Production Security**: Django's comprehensive security framework protecting against common web vulnerabilities
-- **Rapid Development**: Django's "batteries-included" philosophy accelerating feature development
+- **Rapid Development**: Feature development is accelerated by Django's "batteries-included" philosophy.
 - **Admin Efficiency**: Automatic admin interface for user management, company onboarding, and system monitoring
 - **Extensibility**: Modular design supporting future integrations (SMS, payments, chatbot, mobile apps)
 - **Compliance Ready**: Built-in features supporting data privacy, security regulations, and accessibility standards
@@ -86,11 +86,11 @@ The Django-based architecture supports the core complaint management workflow wh
 ## Django-Specific Advantages
 
 - **Built-in Admin Interface**: Pre-built administration panel for system administrators
-- **ORM Abstraction**: Database-agnostic data modeling with PostgreSQL optimization
+- **ORM Abstraction**: Database-agnostic data modeling with PostgreSQL optimisation
 - **Middleware Support**: Custom middleware for multi-tenant request routing and company isolation
 - **Form Handling**: Robust form processing with built-in validation and security
 - **Testing Framework**: Comprehensive testing tools for unit and integration testing
 - **Internationalization**: Built-in support for multiple languages and regions
 - **Migration System**: Automated database schema versioning and management
 
-This Django-based layered approach provides a robust, enterprise-ready foundation for multi-tenant complaint management across banking, telecom, and airline industries, ensuring maintainability, security, and scalability while leveraging Django's comprehensive ecosystem.
+Utilising Django's extensive ecosystem, this layered approach ensures maintainability, security, and scalability while offering a strong, enterprise-ready foundation for multi-tenant complaint management in the banking, telecom, and airline sectors.
