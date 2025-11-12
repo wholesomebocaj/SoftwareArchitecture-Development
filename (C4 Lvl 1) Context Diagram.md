@@ -2,6 +2,7 @@
 
 ## Diagram
 <img width="2728" height="954" alt="image" src="https://github.com/user-attachments/assets/0dde9350-1c34-42da-a35a-3a3f0450c573" />
+<img width="1992" height="1182" alt="image" src="https://github.com/user-attachments/assets/8b32735f-3a96-43a1-88de-3368c674a335" />
 
 
 At the system context level, the Complaint Management System (CMS) is the central system in scope, surrounded by the different **users (people)** and **external systems** it interacts with.
