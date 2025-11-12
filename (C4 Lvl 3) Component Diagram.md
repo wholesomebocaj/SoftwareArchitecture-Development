@@ -1,29 +1,30 @@
 # C4 Level 3: Flask API Component Diagram
 
 <img width="676" height="955" alt="image" src="https://github.com/user-attachments/assets/dbc47783-54fd-40c0-822d-df5a6c4f18a3" />
+<img width="463" height="1125" alt="c4 level 3 python django" src="https://github.com/user-attachments/assets/528ca6ff-76e2-467e-8742-eb18faca1944" />
 
 *Component diagram showing the internal structure of the Flask API using layered architecture*
 
 ## Architecture Description
 
-This component diagram shows how the Flask API container is put together on the inside. It shows the layered architecture that handles the CMS's main business logic. The API is split into three separate layers that make sure that different issues are handled properly and that the code structure is easy to maintain.
+This component diagram shows how the Django API container is structured internally. It illustrates the layered architecture that handles the CMS's core business logic. The API is organised into three distinct layers that ensure proper separation of concerns and maintainable code structure.
 
 ## Component Layers
 
-### Controllers Layer (Presentation)
+### Views Layer (Presentation)
 **Responsibility**: Handle incoming HTTP requests and responses
 
 | Component | Technology | Purpose |
 |-----------|------------|---------|
-| Complaint Controller | Flask Routes | Receives and validates all complaint-related web requests |
-| User Controller | Flask Routes | Manages user authentication, registration, and account management |
+| Complaint Views | Django Views | Receives and validates all complaint-related web requests |
+| User Views | Django Views | Manages user authentication, registration, and account management |
 
 ### Services Layer (Business Logic)
 **Responsibility**: Implement business rules and workflow orchestration
 
 | Component | Technology | Purpose |
 |-----------|------------|---------|
-| Complaint Service | Python Class | Oversees the whole process of complaints and business rules |
+| Complaint Service | Python Class | Oversees the complete complaint process and business rules |
 | User Service | Python Class | Handles user management, authentication, and role-based permissions |
 
 ### Data Layer (Persistence)
@@ -31,29 +32,29 @@ This component diagram shows how the Flask API container is put together on the 
 
 | Component | Technology | Purpose |
 |-----------|------------|---------|
-| Data Manager | Python Class | Provides database operations with automatic multi-tenant filtering |
+| Django ORM | Django ORM | Provides database operations with automatic multi-tenant filtering |
 
 ## External Dependencies
 
 | System | Role | Interaction |
 |--------|------|-------------|
 | Web Application | User Interface | Sends HTTP requests for all user interactions |
-| SQLite Database | Data Storage | Persistent storage for users, complaints, and company data |
+| PostgreSQL Database | Data Storage | Persistent storage for users, complaints, and company data |
 
 ## Data Flow
 
 ### Complaint Creation Workflow:
-1. **Web Application** → Sends request → **Complaint Controller**
-2. **Complaint Controller** → Processes request → **Complaint Service**
+1. **Web Application** → Sends request → **Complaint Views**
+2. **Complaint Views** → Processes request → **Complaint Service**
 3. **Complaint Service** → Checks permissions → **User Service**
-4. **Complaint Service** → Saves data → **Data Manager**
-5. **Data Manager** → Reads/writes → **SQLite Database**
+4. **Complaint Service** → Saves data → **Django ORM**
+5. **Django ORM** → Reads/writes → **PostgreSQL Database**
 
 ### User Authentication Workflow:
-1. **Web Application** → Sends request → **User Controller**
-2. **User Controller** → Processes request → **User Service**
-3. **User Service** → Saves/loads data → **Data Manager**
-4. **Data Manager** → Reads/writes → **SQLite Database**
+1. **Web Application** → Sends request → **User Views**
+2. **User Views** → Processes request → **User Service**
+3. **User Service** → Saves/loads data → **Django ORM**
+4. **Django ORM** → Reads/writes → **PostgreSQL Database**
 
 ## Key Architectural Features
 
@@ -63,31 +64,32 @@ This component diagram shows how the Flask API container is put together on the 
 - **Dependency Injection**: Services are independent and testable
 
 ### Multi-tenancy Implementation
-- Automatic `company_id` filtering at the Data Manager level
+- Automatic `company_id` filtering at the Django ORM level
 - Data isolation enforced throughout the data access layer
 - Role-based permissions managed by User Service
 
 ### Security Features
 - Centralised authentication via User Service
 - Role-based access control
-- Input validation at controller level
+- Input validation at views level
+- Django's built-in security middleware
 
 ## Technology Implementation
 
 | Layer | Components | Technologies |
 |-------|------------|--------------|
-| Presentation | Controllers | Flask Routes, HTTP handling |
+| Presentation | Views | Django Views, HTTP handling |
 | Business Logic | Services | Python classes, business rules |
-| Data Access | Data Manager | SQL queries, multi-tenant filtering |
+| Data Access | Django ORM | Object-relational mapping, multi-tenant filtering |
 
 ## Component Responsibilities
 
-### Complaint Controller
+### Complaint Views
 - Validate incoming complaint data
 - Route requests to appropriate services
 - Return HTTP responses to web application
 
-### User Controller  
+### User Views  
 - Handle login/logout requests
 - Manage user registration
 - Process profile updates
@@ -104,12 +106,12 @@ This component diagram shows how the Flask API container is put together on the 
 - Handle company onboarding
 - Enforce security policies
 
-### Data Manager
+### Django ORM
 - Execute database operations
 - Apply company_id filtering
 - Manage database connections
-- Handle data persistence
+- Handle data persistence through models
 
-This layered component architecture makes sure that the Flask API can handle the complex needs of managing complaints from multiple tenants while still being scalable, maintainable, and testable.
+This layered component architecture ensures that the Django API can handle the complex requirements of multi-tenant complaint management while remaining scalable, maintainable, and testable. The use of Django's built-in ORM and view system provides a robust foundation for enterprise-grade application development.
 
 ---
