@@ -3,6 +3,7 @@
 ## System Overview
 
 <img width="1860" height="1600" alt="image" src="https://github.com/user-attachments/assets/e9bef470-088b-4939-b322-b4824d10cca3" />
+<img width="1673" height="956" alt="c4 lvl 2 python django" src="https://github.com/user-attachments/assets/46f13e31-1c0b-491d-993e-a8873327385f" />
 
 *Figure 1: Container diagram showing the internal structure of the Complaint Management System using a layered N-tier architecture*
 
