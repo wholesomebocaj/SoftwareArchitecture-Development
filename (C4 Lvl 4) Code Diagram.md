@@ -12,5 +12,5 @@ class ComplaintStatus:
   open, closed, in_progress, resolved
 
 class ComplaintValidator:
-  def validate_complaint_data(complaint_data)
+  def validate_complaint_data(complaint_data: ComplaintData)
   def validate_user_permissions(user_id, company_id)
