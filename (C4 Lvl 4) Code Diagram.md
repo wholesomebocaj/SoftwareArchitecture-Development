@@ -34,7 +34,10 @@
 - `validate_user_permissions(user_id, company_id)`
 
 ## Workflow
-ComplaintData
+ComplaintData:
+
 → ComplaintValidator validates it
+
 → ComplaintService processes it
+
 → Creates Complaint with ComplaintStatus
