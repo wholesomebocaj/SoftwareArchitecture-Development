@@ -1,3 +1,4 @@
+# C4 Level 4: Code Diagram
 
 
 ![C4 level 4 python django](https://github.com/user-attachments/assets/57d0d0b9-9069-4f94-8a7d-3603e7a1f8c0)
@@ -33,3 +34,7 @@
 - `validate_user_permissions(user_id, company_id)`
 
 ## Workflow
+ComplaintData
+→ ComplaintValidator validates it
+→ ComplaintService processes it
+→ Creates Complaint with ComplaintStatus
