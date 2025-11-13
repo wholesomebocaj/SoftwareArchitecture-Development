@@ -1,4 +1,4 @@
-# C4 Level 3: Flask API Component Diagram
+# C4 Level 3: Django API Component Diagram
 
 <img width="463" height="1125" alt="c4 level 3 python django" src="https://github.com/user-attachments/assets/528ca6ff-76e2-467e-8742-eb18faca1944" />
 
