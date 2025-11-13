@@ -14,3 +14,10 @@ class ComplaintStatus:
 class ComplaintValidator:
   def validate_complaint_data(complaint_data)
   def validate_user_permissions(user_id, company_id)
+
+
+Workflow
+ComplaintData 
+    → ComplaintValidator validates it
+    → ComplaintService processes it
+    → Creates Complaint with ComplaintStatus
