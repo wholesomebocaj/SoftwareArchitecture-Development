@@ -34,7 +34,6 @@ This validates core workflow behaviour and demonstrates how the system meets key
 ### **RF05 – Update Resolution**
 - A simple dropdown on the complaint detail page allows updating a complaint’s status.  
 - Used only for demonstration (e.g., marking as "In Progress" or "Resolved").  
-- Not required, but adds strength to the PoC.
 
 ---
 
