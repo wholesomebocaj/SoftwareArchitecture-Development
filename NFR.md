@@ -12,3 +12,22 @@
 | **NFR08** | **Reliability** | All complaint-related operations must complete atomically. Failed workflows (e.g., partial updates) must be rolled back automatically to maintain data consistency. | **Must** |
 | **NFR09** | **Usability** | Staff users (agents, support engineers, managers) must be able to navigate core workflows with **no more than 3 clicks** from the dashboard. Consumer flows must remain simple and low-cognitive-load, especially on mobile. | **Should** |
 | **NFR10** | **Maintainability** | The system must use a layered, modular architecture so that components (UI, business logic, data access) can be changed or extended independently. Common maintenance tasks must be executable within **< 30 minutes** by system administrators. | **Could** |
+
+
+# Functional Requirements (FR)
+
+| Code | Name | Description | Acceptance Criteria | Priority |
+|------|------|-------------|---------------------|----------|
+| **RF01** | **Submit Complaint** | Consumers submit complaints via web/mobile with attachments. | Validated fields; unique ticket ID; confirmation; status Open; create ≤10s. | High |
+| **RF02** | **Phone Logging** | Agents log complaints from calls with verified consumer. | Channel=phone; same validation; confirmation to caller. | High |
+| **RF03** | **Track Status** | Consumers view complaint status and timeline. | Secure to owner; updates within 10s; notifications on changes. | High |
+| **RF04** | **Assign Support** | Agents assign support with priority/SLA. | Assignment recorded; support notified. | High |
+| **RF05** | **Update Resolution** | Support updates notes and status transitions. | Only assigned support; valid transitions; timestamped notes. | High |
+| **RF06** | **Confirm & Close** | Consumers confirm resolution and provide CSAT. | Allowed only if Resolved; closure timestamp; CSAT captured. | Medium |
+| **RF07** | **Dashboards** | Managers view SLA performance, TTR, workload, CSAT. | Filters by time and user/team; key KPIs visible. | Medium |
+| **RF08** | **Tenant Onboarding** | Admins create tenant, branding, hours, channels. | Roles seeded; users invited; isolation smoke test passes. | High |
+| **RF09** | **RBAC** | Role-based permissions by tenant. | Least privilege; role assignment audited. | High |
+| **RF10** | **Notifications** | Email/SMS notifications for major status changes. | Retries and preferences supported. | Medium |
+| **RF11** | **Audit Trail** | Log create/update/delete with actor and tenant. | Timestamped; before/after where feasible. | High |
+| **RF12** | **Attachments** | Upload evidence to complaints. | File checks; stored references linked to ticket. | Medium |
+| **RF13** | **Search/Filter** | Find and filter complaints. | Filter by status, priority, assignee, date. | Medium |
