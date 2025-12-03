@@ -1,12 +1,9 @@
-
-<img width="5376" height="4096" alt="diagram" src="https://github.com/user-attachments/assets/e19e12d7-cc64-49be-a80c-ecc64497150f" />
-
-
-
 # Data Design – Complaint Management System (CMS)
 
 This data design describes the **exact** database schema implemented in the CMS Proof-of-Concept. It is fully aligned with the actual PostgreSQL ERD generated from the Django project, containing **only the tables that exist** and reflecting the true multi-tenant, RBAC-based structure.
 
+---
+<img width="5376" height="4096" alt="diagram" src="https://github.com/user-attachments/assets/e19e12d7-cc64-49be-a80c-ecc64497150f" />
 ---
 
 # 1. Tenant & User Domain
