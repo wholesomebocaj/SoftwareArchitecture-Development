@@ -3,6 +3,9 @@
 The data design for the Complaint Management System (CMS) defines the core entities, attributes, and relationships required to support the complaint lifecycle and multi-tenant architecture. The schema reflects the real Django models implemented in the proof-of-concept (PoC) system and supports tenant isolation, role-based access, and complaint status auditing.
 
 ---
+<img width="5376" height="4096" alt="diagram" src="https://github.com/user-attachments/assets/e19e12d7-cc64-49be-a80c-ecc64497150f" />
+
+---
 
 ## Company (Tenant)
 
@@ -107,5 +110,4 @@ The CMS uses a **shared-database, row-level multi-tenant architecture**.
 - Each **Complaint** points to one **Company**  
 - Each **StatusHistory** record inherits its tenant via `complaint.company`  
 
-The application layer consistently filters by:
 
