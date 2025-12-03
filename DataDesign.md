@@ -1,104 +1,111 @@
 # Data Design
 
-The data design for the Complaint Management System (CMS) defines the core entities, their attributes, and the relationships required to support the complaint lifecycle and multi-tenant functionality. The model ensures tenant isolation, auditability, and compatibility with the layered architecture and proof-of-concept (PoC) scope.
+The data design for the Complaint Management System (CMS) defines the core entities, attributes, and relationships required to support the complaint lifecycle and multi-tenant architecture. The schema reflects the real Django models implemented in the proof-of-concept (PoC) system and supports tenant isolation, role-based access, and complaint status auditing.
 
 ---
 
-## Core Entities
+## Company (Tenant)
 
-### **Company (Tenant)**
-Represents each organisation using the CMS.
+Represents an organisation using the CMS.  
+This entity enables multi-tenant isolation.
 
-- `company_id` – primary key  
-- `name` – organisation name  
-- `industry` – banking, telecom, etc.  
-- `hours_of_operation`  
-- `created_at`
+### Attributes
+- `id` — Primary key  
+- `name` — Organisation name  
+- `industry` — e.g., Banking, Telecom, Airline  
 
----
-
-### **User**
-Represents consumers, agents, support engineers, managers, and administrators.
-
-- `user_id` – primary key  
-- `company_id` – foreign key to Company  
-- `name`  
-- `email`  
-- `role` – Consumer / Agent / Support / Manager / Admin  
-- `password_hash`  
-- `created_at`
+*Note: Additional attributes such as operational hours or metadata can be added later but are not required for the PoC.*
 
 ---
 
-### **Complaint**
-Primary record representing a complaint ticket.
+## User + UserProfile (Authentication + Domain Roles)
 
-- `complaint_id` – primary key  
-- `company_id` – foreign key to Company  
-- `user_id` – foreign key to User (creator)  
-- `assigned_to` – optional foreign key to User (handler)  
-- `category`  
+The CMS uses Django’s built-in `User` model for authentication and a related `UserProfile` model for tenant and role information.
+
+### Django `User` (built-in)
+- `id` — Primary key  
+- `username`  
+- `password` (hashed)  
+- `email` (optional)  
+- Standard Django flags (`is_staff`, `is_superuser`, etc.)
+
+### `UserProfile` (domain model)
+- `id` — Primary key  
+- `user` — One-to-one FK to `User`  
+- `company` — FK to `Company`  
+- `role` — `CONSUMER`, `AGENT`, `SUPPORT`, `MANAGER`, `ADMIN`
+
+The combination of **User + UserProfile** replaces the conceptual “User” table in the high-level design.
+
+---
+
+## Complaint
+
+Represents a customer complaint submitted by a consumer.  
+Staff roles (Agent, Support, Manager, Admin) can view and update complaints.
+
+### Attributes
+- `id` — Primary key  
+- `company` — FK to `Company`  
+- `created_by` — FK to `User` (must be a Consumer)  
 - `title`  
 - `description`  
-- `priority`  
-- `status` – Open / In Progress / Pending / Resolved / Closed  
-- `channel` – Web / Mobile / Phone  
+- `category`  
+- `priority` — Low / Medium / High  
+- `status` — Open / In Progress / Pending / Resolved / Closed  
+- `channel` — Web (PoC)  
 - `created_at`  
 - `updated_at`
 
-The PoC uses a simplified subset of these attributes (title, description, status, timestamps).
+Only the core subset is implemented in the PoC, consistent with the MVP requirement.
 
 ---
 
-### **StatusHistory**
-Tracks each transition in a complaint’s lifecycle.
+## ComplaintStatusHistory
 
-- `history_id` – primary key  
-- `complaint_id` – foreign key to Complaint  
-- `changed_by` – foreign key to User  
-- `from_status`  
-- `to_status`  
-- `changed_at`
+Tracks every status change applied to a complaint.  
+This provides the required audit trail within the PoC.
 
----
-
-### **AuditLog**
-Captures actions performed across the system for traceability.
-
-- `audit_id` – primary key  
-- `company_id` – foreign key to Company  
-- `actor_id` – foreign key to User  
-- `entity_type` – e.g., Complaint, User  
-- `entity_id` – ID of affected record  
-- `action` – Create / Update / Delete  
-- `timestamp`
+### Attributes
+- `id` — Primary key  
+- `complaint` — FK to `Complaint`  
+- `changed_by` — FK to `User`  
+- `old_status`  
+- `new_status`  
+- `changed_at`  
+- `note` — Optional text explaining the update
 
 ---
 
-## Entity Relationships
+# Entity Relationships
 
-- **Company → Users:** 1 to Many  
-- **Company → Complaints:** 1 to Many  
-- **User → Complaints:** 1 to Many  
-- **Complaint → StatusHistory:** 1 to Many  
-- **Complaint → Attachments:** 1 to Many  
-- **User → StatusHistory:** 1 to Many  
-- **Company → AuditLog:** 1 to Many  
+| Relationship | Type |
+|-------------|------|
+| Company → UserProfile | 1 to Many |
+| User → UserProfile | 1 to 1 |
+| Company → Complaints | 1 to Many |
+| User (Consumer) → Complaints (created_by) | 1 to Many |
+| Complaint → ComplaintStatusHistory | 1 to Many |
+| User → ComplaintStatusHistory (changed_by) | 1 to Many |
+| Complaint → Attachments (future) | 1 to Many |
+| Company → AuditLog (future) | 1 to Many |
 
-These relationships support complaint lifecycle tracking, auditing, and data isolation.
+These relationships support:
+
+- Multi-tenant isolation  
+- Complaint lifecycle management  
+- Staff vs consumer role-based workflows  
+- Auditable state transitions  
 
 ---
 
-## Multi-Tenant Data Strategy
+# Multi-Tenant Data Strategy
 
-The CMS uses a shared database with **row-level tenant isolation**.  
-Each tenant-owned table (User, Complaint, StatusHistory, Attachment, AuditLog) includes a `company_id` attribute.
+The CMS uses a **shared-database, row-level multi-tenant architecture**.
 
-Django ORM queries filter by `company_id`, ensuring:
+- Each **UserProfile** points to one **Company**  
+- Each **Complaint** points to one **Company**  
+- Each **StatusHistory** record inherits its tenant via `complaint.company`  
 
-- Users only access data from their own organisation  
-- Cross-tenant access is impossible  
-- Security and compliance requirements are met  
-- Consistent behaviour across UI, service, and data layers  
-
+The application layer consistently filters by:
 
