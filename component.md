@@ -1,106 +1,67 @@
-C4 Component Diagram (level 3) 
+C4 Component Diagram (level 3)
 
-Component diagram showing the internal structure of the Django API using layered architecture. 
+Component diagram showing the internal structure of the Django API using layered architecture.
+
+In software architecture literature, layered architectures are commonly represented as either three-tier (Presentation, Application/Business, Data) or four-tier structures where Application and Business Logic are separated. For this CMS, the architecture adopts the standard three-layer structure (Presentation, Application & Business, Data), while still recognising that Django allows business rules to be refined into service components within the middle layer as the system evolves.
 
 Architecture Description  
-This component diagram shows how the Django API container is structured internally. It illustrates the layered architecture that handles the CMS’s core business logic. The API is organised into two main internal layers (Application & Business, and Data) that sit behind the Presentation/UI layer in the web application. Together, these layers ensure proper separation of concerns and maintainable code structure.  
+This component diagram shows how the Django-based Complaint Management System (CMS) is structured internally. It follows a three-layer architecture:
+
+1. Presentation / UI Layer  
+2. Application & Business Layer  
+3. Data Layer  
+
+The Presentation layer runs in the web front end, while the Application & Business and Data layers are hosted inside the Django backend container. This structure provides clear separation of concerns while remaining compatible with Django’s idiomatic patterns and the Proof of Concept implementation.
 
 Component Layers  
 
-Application & Business Layer (Views, Forms, Services)  
-Responsibility: Handle incoming HTTP requests, coordinate use cases, enforce role-based rules, validate input, and apply complaint workflow logic before interacting with the data layer.  
+1. Presentation / UI Layer (Web Frontend)  
+Responsibility: Render user interfaces and capture user input.
 
-Component | Technology | Purpose
---------- | ---------- | -------
-Complaint Views & Forms | Django Views + ModelForms | Receive and validate complaint-related requests, enforce RBAC, coordinate workflow and redirection, and map data into domain models.
-User Views & Forms | Django Views + Forms | Handle login/logout, registration, and account management, enforcing role-based access control and tenant mapping.
-Complaint Service (planned) | Python Class | Encapsulates complaint workflow and business rules as a dedicated, testable service component (future refinement).
-User Service (planned) | Python Class | Encapsulates user and role management logic, including tenant onboarding and permission checks (future refinement).
+This layer is primarily shown in the Context and Container diagrams, but is included here for completeness:
 
-*Note:* In Django terminology these are called “views” and “forms”, but in this architecture they belong to the **Application & Business Layer**, not the Presentation/UI layer. The Presentation layer is implemented by HTML templates and static assets in the web application container.  
+Component      | Technology              | Purpose
+-------------- | ----------------------- | -----------------------------------------------
+Web Pages      | Django Templates (HTML) | Render complaint forms, dashboards, and status views.
+Static Assets  | CSS, basic JavaScript   | Provide layout, styling, and accessibility (WCAG 2.1).
 
-Data Layer (Persistence)  
-Responsibility: Handle data storage and retrieval operations, enforcing tenant isolation and data consistency.  
+This layer does not contain business rules; it only displays data and sends user input to the backend via HTTP requests.
 
-Component | Technology | Purpose
---------- | ---------- | -------
-Django ORM Models | Django ORM + PostgreSQL | Provide database operations with multi-tenant filtering using `company_id`, manage relationships, and ensure ACID-compliant persistence.
+2. Application & Business Layer (Views, Forms, Services)  
+Responsibility: Handle HTTP requests, coordinate use cases, enforce rules, and apply complaint workflow logic.
+
+Component                | Technology                 | Purpose
+------------------------ | -------------------------- | -----------------------------------------------
+Complaint Views & Forms  | Django Views + ModelForms  | Receive and validate complaint requests, enforce role- and tenant-based access, coordinate create/update flows, and redirect to appropriate screens.
+User Views & Forms       | Django Views + Forms       | Handle login/logout, registration, and account management, enforcing RBAC and tenant mapping.
+(Planned) Service Classes| Python Classes             | Extract more complex business rules and workflow logic into dedicated, testable components as the system evolves.
+
+In Django terms these are “views” and “forms”, but in this architecture they collectively make up the Application & Business layer: they orchestrate use cases and apply business rules, independent of how data is physically stored.
+
+3. Data Layer (Persistence)  
+Responsibility: Store and retrieve tenant-isolated data reliably and securely.
+
+Component          | Technology               | Purpose
+------------------ | ------------------------ | -----------------------------------------------
+ORM Models & Repos | Django ORM + PostgreSQL  | Define domain entities (companies, users, complaints, history), execute queries with `company_id`-based tenant isolation, and ensure relational integrity and ACID-compliant persistence.
 
 External Dependencies  
 
-System | Role | Interaction
------- | ---- | ----------
-Web Application | User Interface | Sends HTTP requests for all user interactions and renders HTML/CSS responses generated by the backend.
-PostgreSQL Database | Data Storage | Persistent storage for users, complaints, companies, and history entries, accessed via Django ORM.
+System          | Role           | Interaction
+--------------- | -------------- | -----------------------------------------------
+Web Application | User Interface | Sends HTTP requests and renders HTML/CSS responses from the backend.
+PostgreSQL DB   | Data Storage   | Persists users, companies, complaints, and history records via Django ORM.
 
-Data Flow  
+This three-layer component architecture aligns with the overall layered design defined in the C4 Container model and ADR, while remaining compatible with Django’s recommended patterns and the Proof of Concept implementation.
 
-Complaint Creation Workflow:  
-1. Web Application → Sends HTTP request → Complaint Views  
-2. Complaint Views & Forms → Validate input, enforce RBAC, apply workflow rules  
-3. (Future) Complaint Service → Encapsulates business rules (optional in PoC)  
-4. Application layer → Uses Django ORM models → Save complaint and history  
-5. Django ORM → Reads/writes → PostgreSQL Database  
-6. Application layer → Returns response → Web Application  
+Implementation Alignment with Layered Architecture  
+Django does not physically enforce a split between application flow and business rules. In the current Proof of Concept (PoC), the responsibilities of the Application & Business layer are implemented together within Django views and forms, which:
 
-User Authentication Workflow:  
-1. Web Application → Sends HTTP request → User Views  
-2. User Views & Forms → Validate credentials, enforce tenant mapping  
-3. (Future) User Service → Apply additional role and policy checks  
-4. Application layer → Uses Django ORM → Load/save user and profile data  
-5. Django ORM → Reads/writes → PostgreSQL Database  
-6. Application layer → Returns response → Web Application  
+- handle request flow and validation  
+- enforce role-based access control and tenant checks  
+- apply complaint workflow logic (e.g. status changes, history updates)  
+- map data into ORM models
 
-Key Architectural Features  
+The Presentation / UI layer is implemented using Django templates and CSS, and all persistence is handled by Django ORM models backed by PostgreSQL, with `company_id` used to enforce multi-tenant isolation.
 
-Design Patterns  
-- Layered Architecture: Clear separation between presentation (templates), application & business logic (views/forms/services), and data access (ORM).  
-- Single Responsibility: Each component has a focused purpose (views handle HTTP flow, services encapsulate rules, ORM handles persistence).  
-- Testability: Views and (future) services remain unit-testable by isolating business rules from data access.  
-
-Multi-tenancy Implementation  
-- `company_id` used throughout the ORM models to scope all queries to a single tenant.  
-- Application layer always filters by tenant before reading or writing complaint data.  
-- Role-based permissions enforced in the application layer based on user role and tenant.  
-
-Security Features  
-- Centralised authentication and session management via Django’s authentication system.  
-- Role-based access control enforced in views/forms (and future services).  
-- Input validation at the application layer using Django Forms and ModelForms.  
-- Protection using Django’s built-in security middleware (CSRF, XSS, clickjacking prevention).  
-
-Technology Implementation  
-
-Layer | Components | Technologies
------ | ---------- | -----------
-Presentation / UI | HTML templates, CSS, JavaScript | Django templates, static files served via the web application container.
-Application & Business | Views, Forms, (planned) Services | Django Views, Forms/ModelForms, Python service classes.
-Data Access | ORM & Database | Django ORM and PostgreSQL with multi-tenant filtering.
-
-Component Responsibilities  
-
-- Complaint Views & Forms  
-  - Validate incoming complaint data  
-  - Enforce role and tenant checks  
-  - Coordinate complaint creation and updates  
-  - Return appropriate HTTP responses  
-
-- User Views & Forms  
-  - Handle login, logout, and registration  
-  - Manage account and profile interactions  
-  - Enforce role-based access policies  
-
-- (Planned) Complaint Service  
-  - Orchestrate complaint workflow transitions  
-  - Centralise business rules (e.g., valid status transitions, SLA checks)  
-
-- (Planned) User Service  
-  - Encapsulate user and permission logic  
-  - Support tenant onboarding workflows  
-
-- Django ORM Models  
-  - Execute database operations via PostgreSQL  
-  - Apply `company_id` filtering for tenant isolation  
-  - Maintain relational integrity across complaints, users, and companies  
-
-This layered component architecture ensures that the Django API can handle the complex requirements of multi-tenant complaint management while remaining scalable, maintainable, and testable. It aligns with the layered N-tier architecture defined in the C4 Container model and the ADR, while following Django’s idiomatic implementation style for the Proof of Concept.
+This approach remains fully aligned with the three-layer architecture defined in the C4 models. As the system evolves, more complex business rules can be refactored into dedicated service classes inside the Application & Business layer, without changing the overall architecture.
