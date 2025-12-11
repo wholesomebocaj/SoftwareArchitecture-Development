@@ -7,7 +7,7 @@ In software architecture literature, layered architectures are commonly represen
 Architecture Description  
 This component diagram shows how the Django-based Complaint Management System (CMS) is structured internally. It follows a three-layer architecture:
 
-1. Presentation / UI Layer  
+1. Presentation / UI Layer     
 2. Application & Business Layer  
 3. Data Layer  
 
