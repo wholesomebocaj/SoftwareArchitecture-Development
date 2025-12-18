@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="complaint-card">
+
+    <p class="complaint-subtitle">
+        {{ complaint.company.name }} &middot;
+        created {{ complaint.created_at|date:"Y-m-d H:i" }} &middot;
+        raised by {{ complaint.created_by.username }}
+    </p>
+
+    <!-- basic details grid -->
+    <div class="complaint-grid">
+        <div class="complaint-field">
+            <span class="label">Title</span>
+            <span class="value">{{ complaint.title }}</span>
+        </div>
+
+        <div class="complaint-field">
+            <span class="label">Category</span>
+            <span class="value">{{ complaint.category }}</span>
+        </div>
+
+        <div class="complaint-field">
+            <span class="label">Priority</span>
+            <span class="value">{{ complaint.get_priority_display }}</span>
+        </div>
+
+        <div class="complaint-field">
+            <span class="label">Channel</span>
+            <span class="value">{{ complaint.channel }}</span>
+        </div>
+
+        <div class="complaint-field complaint-description">
+            <span class="label">Description</span>
+            <p class="value">
+                {{ complaint.description }}
+            </p>
+        </div>
+    </div>
+
+    <!-- agent update form -->
+    <div class="complaint-section">
+        <h2>Update status / Priority</h2>
+
+        <form method="post" class="complaint-form">
+            {% csrf_token %}
+            <div class="complaint-form-row">
+                <div class="complaint-form-field">
+                    <label for="status">Status</label>
+                    <select name="status" id="status">
+                        {% for value, label in status_choices %}
+                            <option value="{{ value }}" {% if complaint.status == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="complaint-form-field">
+                    <label for="priority">Priority</label>
+                    <select name="priority" id="priority">
+                        {% for value, label in priority_choices %}
+                            <option value="{{ value }}" {% if complaint.priority == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="complaint-actions">
+                <button type="submit" class="button">Save changes</button>
+                <a href="{% url 'agent_complaint_list' %}" class="button">Back to agent list</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- history -->
+    <div class="complaint-section">
+        <h2>Status history</h2>
+
+        {% if history %}
+            <ul class="complaint-history">
+                {% for item in history %}
+                    <li class="complaint-history-item">
+                        <div class="history-main">
+                            <span class="history-when">
+                                {{ item.changed_at|date:"Y-m-d H:i" }}
+                            </span>
+                            <span class="history-change">
+                                {% if item.old_status != item.new_status %}
+                                    {{ item.old_status }} → {{ item.new_status }}
+                                {% endif %}
+                                                        
+                                {% if item.note and "Priority" in item.note %}
+                                    {% if item.old_status == item.new_status %}
+                                        {{ item.note }}
+                                    {% else %}
+                                        <br>{{ item.note }}
+                                    {% endif %}
+                                {% endif %}                          
+                            </span>
+                        </div>
+                        <div class="history-meta">
+                            by {{ item.changed_by.username }}
+                            {% if item.note %}
+                                &middot; {{ item.note }}
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="history-empty">No status changes recorded yet.</p>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

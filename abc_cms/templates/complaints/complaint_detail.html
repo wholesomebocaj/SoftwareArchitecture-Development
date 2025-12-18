@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="complaint-card">
+    <div class="complaint-card-header">
+        <h1>Complaint #{{ complaint.id }}</h1>
+        <span class="badge">
+            {{ complaint.get_status_display }}
+        </span>
+    </div>
+
+    <p class="complaint-subtitle">
+        {{ complaint.company.name }} &middot; created {{ complaint.created_at|date:"Y-m-d H:i" }}
+    </p>
+
+    <div class="complaint-grid">
+        <div class="complaint-field">
+            <span class="label">Title</span>
+            <span class="value">{{ complaint.title }}</span>
+        </div>
+
+        <div class="complaint-field">
+            <span class="label">Category</span>
+            <span class="value">{{ complaint.category }}</span>
+        </div>
+
+        <div class="complaint-field">
+            <span class="label">Priority</span>
+            <span class="value">{{ complaint.get_priority_display }}</span>
+        </div>
+
+        <div class="complaint-field complaint-description">
+            <span class="label">Description</span>
+            <p class="value">
+                {{ complaint.description }}
+            </p>
+        </div>
+    </div>
+
+    <div class="complaint-actions">
+        <a href="{% url 'complaint_list' %}" class="button">Back to my complaints</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Helpdesk – Complaints for {{ request.user.profile.company.name }}</h1>
+
+    <form method="get" class="complaint-filters">
+    <div class="filter-row">
+
+        <!-- status filter -->
+        <label for="status">Status</label>
+        <select name="status" id="status">
+            <option value="">All statuses</option>
+            {% for value, label in status_choices %}
+                <option value="{{ value }}" {% if current_status == value %}selected{% endif %}>
+                    {{ label }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <!-- priority filter -->
+        <label for="priority">Priority</label>
+        <select name="priority" id="priority">
+            <option value="">All priorities</option>
+            {% for value, label in priority_choices %}
+                <option value="{{ value }}" {% if current_priority == value %}selected{% endif %}>
+                    {{ label }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <!-- keep current sort when filtering -->
+        <input type="hidden" name="sort" value="{{ current_sort }}">
+        <input type="hidden" name="direction" value="{{ current_direction }}">
+
+        <button type="submit" class="filter-button">Apply filters</button>
+        <a href="{% url 'agent_complaint_list' %}" class="filter-button" role="button">
+            Clear
+        </a>
+
+
+    </div>
+    </form>
+
+
+    <table class="complaints-table">
+    <thead>
+        <tr>
+            <th>
+                {% with next_dir="asc" %}
+                    {% if current_sort == "id" and current_direction == "asc" %}
+                        {% with next_dir="desc" %}{% endwith %}
+                    {% endif %}
+                {% endwith %}
+                <a href="?sort=id&direction={% if current_sort == 'id' and current_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                    ID
+                    {% if current_sort == "id" %}
+                        {% if current_direction == "asc" %}▲{% else %}▼{% endif %}
+                    {% endif %}
+                </a>
+            </th>
+
+            <th>
+                <a href="?sort=title&direction={% if current_sort == 'title' and current_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                    Title
+                    {% if current_sort == "title" %}
+                        {% if current_direction == "asc" %}▲{% else %}▼{% endif %}
+                    {% endif %}
+                </a>
+            </th>
+
+            <th>
+                <a href="?sort=category&direction={% if current_sort == 'category' and current_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                    Category
+                    {% if current_sort == "category" %}
+                        {% if current_direction == "asc" %}▲{% else %}▼{% endif %}
+                    {% endif %}
+                </a>
+            </th>
+
+            <th>
+                <a href="?sort=status&direction={% if current_sort == 'status' and current_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                    Status
+                    {% if current_sort == "status" %}
+                        {% if current_direction == "asc" %}▲{% else %}▼{% endif %}
+                    {% endif %}
+                </a>
+            </th>
+
+            <th>
+                <a href="?sort=priority&direction={% if current_sort == 'priority' and current_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                    Priority
+                    {% if current_sort == "priority" %}
+                        {% if current_direction == "asc" %}▲{% else %}▼{% endif %}
+                    {% endif %}
+                </a>
+            </th>
+
+            <th>
+                <a href="?sort=created&direction={% if current_sort == 'created' and current_direction == 'asc' %}desc{% else %}asc{% endif %}">
+                    Created
+                    {% if current_sort == "created" %}
+                        {% if current_direction == "asc" %}▲{% else %}▼{% endif %}
+                    {% endif %}
+                </a>
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for complaint in complaints %}
+            <tr>
+                <td>{{ complaint.id }}</td>
+                <td>
+                    <a href="{% url 'agent_complaint_detail' complaint.pk %}">
+                        {{ complaint.title }}
+                    </a>
+                </td>
+                <td>{{ complaint.category }}</td>
+                <td>{{ complaint.get_status_display }}</td>
+                <td>{{ complaint.get_priority_display }}</td>
+                <td>{{ complaint.created_at|date:"Y-m-d H:i" }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">No complaints found.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+    {% if page_obj.paginator.num_pages > 1 %}
+        <div class="pagination">
+
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}
+                 &sort={{ current_sort }}
+                 &direction={{ current_direction }}
+                 &status={{ current_status }}
+                 &priority={{ current_priority }}"
+           class="page-link">« Prev</a>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+        {% if num == page_obj.number %}
+            <span class="page-link current">{{ num }}</span>
+        {% elif num >= page_obj.number|add:-2 and num <= page_obj.number|add:2 %}
+            <a href="?page={{ num }}
+                     &sort={{ current_sort }}
+                     &direction={{ current_direction }}
+                     &status={{ current_status }}
+                     &priority={{ current_priority }}"
+               class="page-link">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}
+                 &sort={{ current_sort }}
+                 &direction={{ current_direction }}
+                 &status={{ current_status }}
+                 &priority={{ current_priority }}"
+           class="page-link">Next »</a>
+    {% endif %}
+
+</div>
+{% endif %}
+
+
+{% endblock %}
+
+
+
+        

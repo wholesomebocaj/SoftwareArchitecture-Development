@@ -1,0 +1,19 @@
+Models – your data structure (what the database stores)
+
+Views – your logic (what happens when a request comes in)
+
+URLs – your routing (which view runs for which page)
+
+Templates – your HTML (what the user sees)
+
+Forms – your validation (clean + check user input)
+
+Settings – your global config (database, apps, static files, login rules)
+
+Middleware – automatic filters (auth, sessions, security)
+
+Admin – Django’s built-in backend to manage data
+
+Static files – CSS, JS, images
+
+Apps – organised modules (complaints, accounts, etc.)
