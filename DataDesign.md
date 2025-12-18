@@ -6,53 +6,61 @@ This data design describes the **exact** database schema implemented in the CMS 
 <img width="5376" height="4096" alt="diagram" src="https://github.com/user-attachments/assets/e19e12d7-cc64-49be-a80c-ecc64497150f" />
 ---
 
-# 1. Tenant & User Domain
+1\. Tenant & User Domain 
 
-## 1.1 `accounts_company`
-Stores organisations (tenants) using the CMS.
+1.1 accounts\_company 
+
+Stores organisations (tenants) using the CMS. 
 
 | Field | Type | Description |
-|-------|-------|-------------|
+| --- | --- | --- |
 | id | PK | Unique identifier |
 | name | varchar | Company name |
 | industry | varchar | Company sector (banking, telecom, etc.) |
 
----
+1.2 accounts\_userprofile 
 
-## 1.2 `accounts_userprofile`
-Extends the built-in Django user with role and tenant information.
+Extends the built-in Django user with role and tenant information. 
 
 | Field | Type | Description |
-|-------|-------|-------------|
+| --- | --- | --- |
 | id | PK | Unique identifier |
 | user_id | FK → auth_user.id | Associated Django user |
 | company_id | FK → accounts_company.id | Tenant the user belongs to |
 | role | varchar | Role: consumer/agent/support/manager/admin |
 
----
+1.3 Django Authentication & RBAC Tables 
 
-## 1.3 Django Authentication & RBAC Tables
+These tables are automatically created by Django and provide user accounts, permissions, and role/group assignments: 
 
-These tables are automatically created by Django and provide user accounts, permissions, and role/group assignment:
+*   auth\_user 
+    
 
-- `auth_user`
-- `auth_group`
-- `auth_permission`
-- `auth_group_permissions`
-- `auth_user_groups`
-- `auth_user_user_permissions`
+*   auth\_group 
+    
 
-**Purpose:** Implements Django’s built-in authentication and role-based access control (RBAC).
+*   auth\_permission 
+    
 
----
+*   auth\_group\_permissions 
+    
 
-# 2. Complaint Domain
+*   auth\_user\_groups 
+    
 
-## 2.1 `complaints_complaint`
-The core complaint record.
+*   auth\_user\_user\_permissions 
+    
+
+Purpose: Implements Django’s built-in authentication and role-based access control. 
+
+2\. Complaint Domain 
+
+2.1 complaints\_complaint 
+
+The core complaint record. 
 
 | Field | Type | Description |
-|-------|-------|-------------|
+| --- | --- | --- |
 | id | PK | Unique complaint ID |
 | title | varchar | Complaint title |
 | description | varchar | Detailed complaint content |
@@ -62,93 +70,130 @@ The core complaint record.
 | channel | varchar | Submission channel (web/phone) |
 | created_at | timestamp | When the complaint was created |
 | updated_at | timestamp | Last time it was modified |
-| company_id | FK → accounts_company.id | Tenant the complaint belongs to |
+| company_id | FK → accounts_company.id | The tenant the complaint belongs to |
 | created_by_id | FK → auth_user.id | User who created the complaint |
-| assigned_to_id | FK → auth_user.id (nullable) | User assigned to resolve the complaint |
+| assigned_to_id | FK → auth_user.id (nullable) | A user was assigned to resolve the complaint. |
 
----
+2.2 complaints\_complainthistory 
 
-## 2.2 `complaints_complainthistory`
-Tracks changes to complaint status over time.
+Tracks changes to complaint status over time. 
 
 | Field | Type | Description |
-|-------|-------|-------------|
+| --- | --- | --- |
 | id | PK | Unique history entry |
-| old_status | varchar | Status before change |
+| old_status | varchar | Status before change |
 | new_status | varchar | Status after change |
 | note | varchar | Optional note about the change |
 | changed_at | timestamp | When the change occurred |
 | changed_by_id | FK → auth_user.id | User who performed the action |
 | complaint_id | FK → complaints_complaint.id | Related complaint |
 
-**Purpose:** Provides auditability and supports managerial reporting.
+Purpose: Provides auditability and supports managerial reporting. 
 
----
+3\. Django System Tables 
 
-# 3. Django System Tables
+These tables support Django’s internal framework functionality and appear in the live database: 
 
-These tables support Django’s internal framework functionality and appear in the live database:
+3.1 django\_admin\_log 
 
-## 3.1 `django_admin_log`
-Tracks administrative actions (add/update/delete) performed in Django Admin.
+Tracks administrative actions (add/update/delete) performed in Django Admin. 
 
-## 3.2 `django_migrations`
-Tracks applied migrations to manage schema version control.
+3.2 django\_migrations 
 
-## 3.3 `django_session`
-Stores authenticated session data for logged-in users.
+Tracks applied migrations to manage schema version control. 
 
-## 3.4 `django_content_type`
-Metadata table mapping Django models to permissions and admin functionality.
+3.3 django\_session 
 
----
+Stores authenticated session data for logged-in users. 
 
-# 4. Relationships Summary
+3.4 django\_content\_type 
 
-- **Company → Users**  
-  One company has many users (`accounts_company` → `accounts_userprofile`)
+Metadata table mapping Django models to permissions and admin functionality. 
 
-- **Company → Complaints**  
-  One company owns many complaints (`accounts_company` → `complaints_complaint`)
+4\. Relationships Summary 
 
-- **User → Created Complaints**  
-  `auth_user` links to `complaints_complaint.created_by_id`
+Company \-> Users One company has many users (accounts\_company → accounts\_userprofile) 
 
-- **User → Assigned Complaints**  
-  `auth_user` links to `complaints_complaint.assigned_to_id`
+Company \-> Complaints One company owns many complaints (accounts\_company → complaints\_complaint) 
 
-- **Complaint → Complaint History Entries**  
-  One complaint has many history entries (`complaints_complaint` → `complaints_complainthistory`)
+User \-> Created Complaints auth\_user links to complaints\_complaint.created\_by\_id 
 
-- **User → Complaint History Actions**  
-  `auth_user` links to `complaints_complainthistory.changed_by_id`
+User \-> Assigned Complaints auth\_user links to complaints\_complaint.assigned\_to\_id 
 
----
+Complaint \-> Complaint History Entries One complaint has many history entries (complaints\_complaint → complaints\_complainthistory) 
 
-# 5. Scope Notes
+User \-> Complaint History Actions auth\_user links to complaints\_complainthistory.changed\_by\_id 
 
-This data model intentionally represents **only the implemented PoC**.  
-The following are **not included** because they were not implemented in the live database:
+Security Considerations 
 
-- Attachment storage  
-- Notification preferences  
-- SLA/priority lookup tables  
-- Tenant settings/config  
-- Chatbot integrations  
+Security is a fundamental requirement for the CMS given the sensitivity of consumer data and the multi-tenant operating model. The security design supports NFR03 (Security), NFR04 (Security) and NFR08 (Reliability) and is implemented across all layers of the architecture. 
 
-These may be part of future iterations but are outside the current Proof-of-Concept.
+Authentication 
 
----
+Django’s authentication framework is used for secure login and session management: 
 
-# ✔ Final Statement
+*   Passwords are stored as salted, hashed values. 
+    
 
-This data design matches the ERD and the Django project **exactly**, ensuring complete consistency across:
+*   Server-side session handling with HTTP-only cookies. 
+    
 
-- C4 architecture diagrams  
-- The layered architecture  
-- The actual PostgreSQL database  
-- The implemented Django models  
+*   Consistent login/logout flows through Django Auth. 
+    
 
-This file is ready for submission and inclusion in your GitHub project.
+Authorisation & Role-Based Access 
 
+Access is controlled by both role and tenant: 
 
+*   UserProfile enforces one role per user. 
+    
+
+*   Views and forms limit what each role can access and perform. 
+    
+
+*   Administrative features are available only to platform admins. 
+    
+
+This ensures users only interact with data and functionality assigned to their role. 
+
+Tenant-Level Data Isolation 
+
+Multi-tenant isolation is enforced through the data model: 
+
+*   Every complaint and user record links to a company via company\_id. 
+    
+
+*   All queries use tenant filtering to prevent cross-organisation visibility. 
+    
+
+Defence-in-depth roadmap: PostgreSQL row-level security (RLS) for database\-level enforcement. 
+
+Protection from Common Web Threats 
+
+Django provides built-in protections aligned with OWASP principles: 
+
+*   CSRF tokens on all state-changing requests. 
+    
+
+*   Template auto-escaping reduces XSS risk. 
+    
+
+*   The ORM prevents SQL injections through parameterised queries. 
+    
+
+*   Security middleware. 
+    
+
+Deployment assumes HTTPS to encrypt communication between client and server. 
+
+Auditability & Data Integrity 
+
+To support accountability and reliable operations: 
+
+*   The complaint history table records status changes (who/what/when). 
+    
+
+*   ACID-compliant PostgreSQL transactions prevent partial updates. 
+    
+
+*   The migration system ensures consistent schema management.
