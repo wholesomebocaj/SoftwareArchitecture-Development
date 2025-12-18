@@ -1,0 +1,420 @@
+body {
+  background-color: white;
+}
+header,
+header nav {
+  background-color: white;
+}
+
+/* table styling */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 0.95rem;
+}
+
+thead {
+  background-color: #5a466c9d;
+}
+
+th,
+td {
+  padding: 12px 16px;
+  text-align: left;
+}
+
+th {
+  font-weight: bold;
+  border-bottom: 2px solid #ddd;
+}
+
+tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+tr:hover {
+  background-color: #1f1f1f1b;
+}
+
+td a {
+  text-decoration: none;
+  color: #0066cc;
+}
+
+td a:hover {
+  text-decoration: underline;
+}
+
+.table-container {
+  margin-top: 1.5rem;
+}
+
+.page-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem 2rem;
+}
+
+/* form card styling */
+
+.form-card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1.5rem 1.75rem;
+  margin-top: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+/* matches widgets using class="form-control" */
+.form-control,
+.form-card input[type="text"],
+.form-card textarea,
+.form-card select {
+  width: 100%;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.form-control:focus,
+.form-card input[type="text"]:focus,
+.form-card textarea:focus,
+.form-card select:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.15);
+}
+
+.form-help {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.form-errors,
+.field-errors {
+  margin-top: 0.25rem;
+  color: #b30000;
+  font-size: 0.85rem;
+}
+
+.form-errors {
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #ffe6e6;
+  border-radius: 4px;
+}
+
+.form-actions {
+  margin-top: 1.25rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.45rem 0.9rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: #0066cc;
+  color: white;
+  border-color: #0066cc;
+}
+
+.btn-primary:hover {
+  background-color: #0053a3;
+  border-color: #0053a3;
+}
+
+.btn-secondary {
+  background-color: #f5f5f5;
+  color: #333;
+  border-color: #ccc;
+}
+
+.btn-secondary:hover {
+  background-color: #e8e8e8;
+}
+
+/* status colors */
+
+.status-open {
+  color: #198754;
+  font-weight: 600;
+}
+
+.status-inprogress {
+  color: #0d6efd;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #6c757d;
+  font-weight: 600;
+}
+
+.status-resolved {
+  color: #198754;
+  font-weight: 600;
+}
+
+.status-closed {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.status-open {
+  color: #198754;
+  font-weight: bold;
+}
+
+.status-inprogress {
+  color: #0d6efd;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: #6c757d;
+  font-weight: bold;
+}
+
+.status-resolved {
+  color: #198754;
+  font-weight: bold;
+}
+
+.status-closed {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+/* complaint detail card */
+.complaint-card {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 1.8em 2em;
+  background: #f1f1f1;
+  border-radius: 1em;
+  box-shadow: 8px 8px 20px #c7c7c7, -8px -8px 20px #ffffff;
+}
+
+.complaint-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+}
+
+.complaint-card-header h1 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.complaint-subtitle {
+  margin: 0.4em 0 1.4em;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.complaint-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em 2em;
+}
+
+/* description takes full width */
+.complaint-description {
+  grid-column: 1 / -1;
+}
+
+.complaint-field .label {
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #777;
+  margin-bottom: 0.2em;
+}
+
+.complaint-field .value {
+  font-size: 1rem;
+  color: #111;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2em 0.75em;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  background: #e8e8e8;
+  box-shadow: 4px 4px 10px #c5c5c5, -4px -4px 10px #ffffff;
+}
+
+.complaint-actions {
+  margin-top: 1.8em;
+  text-align: right;
+}
+
+.complaint-section {
+  margin-top: 1.8em;
+  border-top: 1px solid #ddd;
+  padding-top: 1.2em;
+}
+
+.complaint-section h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.8em;
+}
+
+.complaint-form {
+  margin: 0;
+}
+
+.complaint-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2em;
+  align-items: flex-end;
+}
+
+.complaint-form-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.complaint-form-field label {
+  font-size: 0.85rem;
+  margin-bottom: 0.2em;
+  color: #555;
+}
+
+.complaint-form-field select {
+  padding: 0.35em 0.6em;
+  border-radius: 0.4em;
+  border: 1px solid #ccc;
+  background: #f8f8f8;
+}
+
+.complaint-actions {
+  margin-top: 1.2em;
+  text-align: right;
+}
+
+.complaint-history {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.complaint-history-item {
+  padding: 0.6em 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.history-main {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.history-when {
+  color: #666;
+}
+
+.history-change {
+  font-weight: 600;
+}
+
+.history-meta {
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 0.1em;
+}
+
+.history-empty {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.pagination {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.page-link {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.page-link.current {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+    font-weight: 600;
+}
+
+/* Styling for filters on list */
+.filter-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.filter-row label {
+    font-weight: 600;
+}
+
+.filter-row select {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f4f4f4;
+    font-size: 0.9rem;
+}
+
+.filter-button {
+    padding: 6px 12px;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
+.filter-button:hover {
+    background-color: #e8e8e8;
+}
