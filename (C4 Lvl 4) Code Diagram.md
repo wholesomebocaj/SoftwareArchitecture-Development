@@ -2,42 +2,68 @@
 
 
 ![C4 level 4 python django](https://github.com/user-attachments/assets/57d0d0b9-9069-4f94-8a7d-3603e7a1f8c0)
+Code-Level Components 
 
-## Classes
+Complaint Service 
 
-### ComplaintData
-- `title`
-- `description`
-- `category`
-- `priority`
+Responsibility: Coordinate complaint-related operations within the Proof\-of-Concept 
 
-### ComplaintService
-- `create_complaint(user_id, complaint_data)`
-- `get_complaint(user_id, complaint_id)`
+*   Creates and retrieves complaint records 
+    
 
-### Complaint
-- `complaint_id`
-- `company_id`
-- `user_id`
-- `description`
-- `status`
-- `created_date`
+*   Acts as the central entry point for complaint workflows 
+    
 
-### ComplaintStatus
-- `open`
-- `closed`
-- `in_progress`
-- `resolved`
+*   Coordinates validation and persistence of complaint data 
+    
 
-### ComplaintValidator
-- `validate_complaint_data(complaint_data)`
-- `validate_user_permissions(user_id, company_id)`
+Complaint Validator 
 
-## Workflow
-ComplaintData:
+Responsibility: Enforce validation and permission rules 
 
-→ ComplaintValidator validates it
+*   Validates incoming complaint data 
+    
 
-→ ComplaintService processes it
+*   The system ensures that users have the necessary permissions to create or access complaints within their specific tenant. 
+    
 
-→ Creates Complaint with ComplaintStatus
+Complaint Data 
+
+Responsibility: Represent complaint input data 
+
+*   Keeps information about complaints sent by users (title, description, category, importance) 
+    
+
+*   Moved between the approval and service parts 
+    
+
+Complaint 
+
+Responsibility: Represent the complaint domain entity 
+
+*   Stores complaint details and tenant ownership 
+    
+
+*   Maintains the current status of the complaint 
+    
+
+*   Persisted in the database through the service layer. 
+    
+
+Complaint Status 
+
+Responsibility: Define valid complaint lifecycle states 
+
+*   Open 
+    
+
+*   In Progress 
+    
+
+*   Resolved 
+    
+
+*   Closed 
+    
+
+These status values are used consistently across the service and domain model to enforce valid state transitions.
