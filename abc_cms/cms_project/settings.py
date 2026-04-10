@@ -12,15 +12,25 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+import os # 3.2 Implent security enhancements in existing prototype
+from dotenv import load_dotenv # 3.2 Implent security enhancements in existing prototype
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# 3.2 Implent security enhancements in existing prototype
+# Load environment variables from .env file
+load_dotenv(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-48$q5go1pz(d*4-lpx6v#^^2rs%k0oz9)8wo638a%8+=w==f_n'
+
+# 3.2 Implent security enhancements in existing prototype
+#SECRET_KEY = 'django-insecure-48$q5go1pz(d*4-lpx6v#^^2rs%k0oz9)8wo638a%8+=w==f_n'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -76,17 +86,27 @@ WSGI_APPLICATION = 'cms_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+#DATABASES = {
+#    "default": {
+#        "ENGINE": "django.db.backends.postgresql",
+#        "NAME": "abc_cms",
+#        "USER": "abc_cms_user",
+#        "HOST": "localhost",
+#        "PASSWORD": "abc_cms_password", 
+#        "PORT": "5432",
+#    }
+#}
+# 3.2 Implent security enhancements in existing prototype
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "abc_cms",
-        "USER": "abc_cms_user",
-        "PASSWORD": "abc_cms_password", 
-        "HOST": "localhost",
-        "PORT": "5432",
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
